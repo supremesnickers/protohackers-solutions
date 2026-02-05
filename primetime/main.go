@@ -7,11 +7,7 @@ import (
 	"net"
 )
 
-type Request struct {
-	Method string      `json:"method"`
-	Number json.Number `json:"number"`
-}
-
+// slow implementation of isPrime, O(n)
 // func isPrime[N int | int64](inputNumber N) bool {
 // 	for i := N(2); i <= (inputNumber / 2); i++ {
 // 		if inputNumber%i == 0 {
@@ -21,6 +17,7 @@ type Request struct {
 // 	return true
 // }
 
+// faster implementation of isPrime, O(sqrt(n))
 func isPrime[N int | int64](inputNumber N) bool {
 	if inputNumber < 2 {
 		return false
@@ -73,7 +70,7 @@ func handleRequest(conn net.Conn) {
 		}
 		jsonBytes := bytes.NewReader(buf)
 
-		var request Request
+		var request map[string]any
 		d := json.NewDecoder(jsonBytes)
 		d.UseNumber()
 		decodeErr := d.Decode(&request)
@@ -84,9 +81,9 @@ func handleRequest(conn net.Conn) {
 			"prime":  "false",
 		}
 
-		if decodeErr == nil && request.Method == "isPrime" {
-			fmt.Print("Received isPrime request for ", request.Number, "\n")
-			if numInt, err := request.Number.Int64(); err == nil {
+		if decodeErr == nil && request["method"] == "isPrime" {
+			fmt.Print("Received isPrime request for ", request["number"], "\n")
+			if numInt, err := request["number"].(json.Number).Int64(); err == nil {
 				response["prime"] = isPrime(numInt)
 			} else {
 				conn.Write(makeMalformedResponse(response))
