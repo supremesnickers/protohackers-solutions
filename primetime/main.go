@@ -103,14 +103,14 @@ func handleRequest(conn net.Conn) {
 }
 
 func main() {
-	l, err := net.Listen("tcp", "localhost:8080")
+	l, err := net.Listen("tcp", ":8080")
 	if err != nil {
 		fmt.Println("Error listening:", err.Error())
 		return
 	}
 	defer l.Close()
 
-	fmt.Println("Listening on localhost:8080")
+	fmt.Println("Listening on port 8080")
 
 	for {
 		conn, err := l.Accept()
