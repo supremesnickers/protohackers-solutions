@@ -12,9 +12,10 @@ import (
 
 var (
 	validChallenges = map[string]bool{
-		"smoke-test":   true,
-		"primetime":    true,
-		"pest-control": true,
+		"smoke-test":      true,
+		"primetime":       true,
+		"pest-control":    true,
+		"means-to-an-end": true,
 	}
 
 	mu             sync.Mutex
