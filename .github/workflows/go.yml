@@ -30,8 +30,8 @@ jobs:
     - name: Build primetime
       run: go build -o ./primetime/server ./primetime
 
-    - name: Build pest-control
-      run: go build -o ./pest-control/server ./pest-control
+    # - name: Build pest-control
+    #   run: go build -o ./pest-control/server ./pest-control
 
     - name: Build means-to-an-end
       run: go build -o ./means-to-an-end/server ./means-to-an-end
