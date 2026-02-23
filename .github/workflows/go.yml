@@ -35,3 +35,6 @@ jobs:
 
     - name: Build means-to-an-end
       run: go build -o ./means-to-an-end/server ./means-to-an-end
+
+    - name: Build budget-chat
+      run: go build -o ./budget-chat/server ./budget-chat
