@@ -16,6 +16,7 @@ var (
 		"primetime":       true,
 		"pest-control":    true,
 		"means-to-an-end": true,
+		"budget-chat":     true,
 	}
 
 	mu             sync.Mutex
@@ -86,7 +87,7 @@ func setChallengeHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if !validChallenges[name] {
-		http.Error(w, fmt.Sprintf("invalid challenge name: %s. Valid options: smoke-test, primetime, pest-control", name), http.StatusBadRequest)
+		http.Error(w, fmt.Sprintf("invalid challenge name: %s. Valid options: smoke-test, primetime, pest-control means-to-an-end budget-chat", name), http.StatusBadRequest)
 		return
 	}
 
@@ -127,7 +128,7 @@ func main() {
 	port := "9000"
 	log.Printf("Controller listening on port %s", port)
 	log.Printf("Usage: GET /setchallenge?name=<challenge>")
-	log.Printf("Valid challenges: smoke-test, primetime, pest-control")
+	log.Printf("Valid challenges: smoke-test, primetime, pest-control means-to-an-end budget-chat")
 
 	if err := http.ListenAndServe(":"+port, nil); err != nil {
 		log.Fatalf("Failed to start controller: %v", err)
