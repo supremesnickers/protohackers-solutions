@@ -6,6 +6,7 @@ import (
 	"log"
 	"net"
 	"protohackers/budget-chat/chatroom"
+	"regexp"
 )
 
 // we need separate goroutines for writing and reading to/from the user connection
@@ -21,12 +22,19 @@ func handleChat(conn net.Conn, cr *chatroom.ChatRoom) {
 	}
 
 	reader := bufio.NewReader(conn)
+
 	username, err := reader.ReadString(byte('\n'))
-	username = stripNewline(username)
 	if err != nil {
 		log.Printf("Error while reading message: %e", err)
-		// ???
+		return
 	}
+	username = stripNewline(username)
+
+	// validate username, ensure length of at least 1 and only alphanumeric characters
+	if len(username) < 1 || !regexp.MustCompile(`^[a-zA-Z0-9]*$`).MatchString(username) {
+		return
+	}
+
 	log.Printf("%s joined the server.", username)
 	cr.Join(username, conn)
 	defer cr.Leave(username)
