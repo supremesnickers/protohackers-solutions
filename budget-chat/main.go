@@ -13,14 +13,14 @@ func handleChat(conn net.Conn, cr *chatroom.ChatRoom) {
 	defer func() {
 		conn.Close()
 	}()
-	reader := bufio.NewReader(conn)
 
-	_, err := conn.Write([]byte("Welcome to budgetchat! What shall I call you? "))
+	_, err := conn.Write([]byte("Welcome to budgetchat! What shall I call you?\n"))
 	if err != nil {
 		log.Printf("Could not send welcome message: %e", err)
 		return
 	}
 
+	reader := bufio.NewReader(conn)
 	username, err := reader.ReadString(byte('\n'))
 	username = stripNewline(username)
 	if err != nil {

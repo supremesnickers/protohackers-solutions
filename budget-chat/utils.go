@@ -5,5 +5,5 @@ import (
 )
 
 func stripNewline(str string) string {
-	return strings.ReplaceAll(str, "\n", "")
+	return strings.TrimSpace(str)
 }
